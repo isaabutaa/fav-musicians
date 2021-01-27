@@ -7,7 +7,7 @@ export default function App() {
         <div>
             <Navbar />
             <Switch>
-                <Route exact path="/" render={Auth} />
+                <Route exact path="/" render={() => <Auth />} />
             </Switch>
         </div>
     )

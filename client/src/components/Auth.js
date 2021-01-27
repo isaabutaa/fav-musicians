@@ -1,49 +1,42 @@
-import React, { useState } from 'react'
-import AuthForm from './AuthForm.js'
+import React, { useState } from "react";
+import AuthForm from "./AuthForm.js";
 
 export default function Auth() {
-    const initInputs = { username: "", password: "" }
-    const [inputs, setInputs] = useState(initInputs)
-    const [toggle, setToggle] = useState(false)
+  const initInputs = { username: "", password: "" };
+  const [inputs, setInputs] = useState(initInputs);
+  const [isLoginMode, setIsLoginMode] = useState(true);
 
-    function handleChange(e) {
-        const {name, value} = e.target
-        setInputs(prevInputs => ({
-            ...prevInputs,
-            [name]: value
-        }))
-    }
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setInputs((prevInputs) => ({
+      ...prevInputs,
+      [name]: value,
+    }));
+  }
 
-    function handleSubmit(e) {
-        e.preventDefault()
-        // submit
-    }
+  function handleSubmit(e) {
+    e.preventDefault();
+    // submit
+  }
 
-    return (
-        <div>
-            <h1>Favorite Musicians app</h1>
-            {
-                !toggle ?
-                    <>
-                        <AuthForm
-                            btnText="Sign Up"
-                            handleChange={handleChange}
-                            handleSubmit={handleSubmit}
-                            inputs={inputs}
-                        />
-                        <p onClick={setToggle(prev => !prev)}>Already a member? Login!</p>
-                    </>
-                :
-                    <>
-                        <AuthForm
-                            btnText="Login"
-                            handleChange={handleChange}
-                            handleSubmit={handleSubmit}
-                            inputs={inputs}
-                        />
-                        <p onClick={setToggle(prev => !prev)}>Not a member? Sign up!</p>
-                    </>
-            }
-        </div>
-    )
+  const formBtnText = isLoginMode ? "Login" : "Sign Up";
+  const toggleLoginModeText = isLoginMode
+    ? "Not a member? Sign up!"
+    : "Already a member? Login!";
+  return (
+    <div>
+      <h1>Favorite Musicians app</h1>
+      <>
+        <AuthForm
+          btnText={formBtnText}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          inputs={inputs}
+        />
+        <p onClick={() => setIsLoginMode((prev) => !prev)}>
+          {toggleLoginModeText}
+        </p>
+      </>
+    </div>
+  );
 }
