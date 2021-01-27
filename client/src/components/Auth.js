@@ -1,22 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import AuthForm from './AuthForm.js'
+import { UserContext } from '../context/UserProvider.js'
 
 export default function Auth() {
-    const initInputs = { username: "", password: "" }
-    const [inputs, setInputs] = useState(initInputs)
+    const [loginInfo, setLoginInfo] = useState({ username: "", password: ""})
     const [isLoginMode, setIsLoginMode] = useState(true)
+    const { signup, login } = useContext(UserContext)
 
     function handleChange(e) {
         const {name, value} = e.target
-        setInputs(prevInputs => ({
-            ...prevInputs,
+        setLoginInfo(prev => ({
+            ...prev,
             [name]: value
         }))
     }
 
     function handleSubmit(e) {
         e.preventDefault()
-        // submit
+        isLoginMode ?
+            login(loginInfo)
+        :
+            signup(loginInfo)
     }
 
     const formBtnText = isLoginMode ? "Login" : "Sign Up"
@@ -32,7 +36,7 @@ export default function Auth() {
                     btnText={formBtnText}
                     handleChange={handleChange}
                     handleSubmit={handleSubmit}
-                    inputs={inputs}
+                    loginInfo={loginInfo}
                 />
                 <p onClick={() => setIsLoginMode(prev => !prev)}>
                     {toggleLoginMode}

@@ -5,7 +5,7 @@ export default function AuthForm(props) {
         btnText,
         handleChange,
         handleSubmit,
-        inputs: {
+        loginInfo: {
             username,
             password
         }
