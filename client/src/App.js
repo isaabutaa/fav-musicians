@@ -7,7 +7,15 @@ import Profile from './components/Profile.js'
 
 
 export default function App() {
-    const { user, token, artists, getUserArtists, addArtist } = useContext(UserContext)
+    const { 
+        user, 
+        token, 
+        artists, 
+        getUserArtists, 
+        addArtist,
+        editArtist,
+        deleteArtist 
+    } = useContext(UserContext)
 
     return (
         <div>
@@ -26,6 +34,8 @@ export default function App() {
                         artists={artists} 
                         getUserArtists={getUserArtists} 
                         addArtist={addArtist} 
+                        editArtist={editArtist}
+                        deleteArtist={deleteArtist}
                     />
                 </Route>
             </Switch>

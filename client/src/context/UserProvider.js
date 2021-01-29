@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { userAxios } from './userAxios.js'
 
+const initUserState = {
+    user: JSON.parse(localStorage.getItem("user")) || {},
+    token: localStorage.getItem("token") || ""
+}
+
 export const UserContext = React.createContext()
 
 export default function UserProvider(props) {
-    const initUserState = {
-        user: JSON.parse(localStorage.getItem("user")) || {},
-        token: localStorage.getItem("token") || ""
-    }
     const [userState, setUserState] = useState(initUserState)
     const [artists, setArtists] = useState([])
 
@@ -36,7 +37,7 @@ export default function UserProvider(props) {
             .catch(err => console.log(err.response.data.errMsg))
     }
 
-    // get artists
+    // get user artists
     function getUserArtists() {
         userAxios.get("/protected/artists/user")
             .then(res => {
@@ -46,11 +47,29 @@ export default function UserProvider(props) {
             .catch(err => console.log(err.response.data.errMsg))
     }
 
-    // add artist
+    // add artist by user
     function addArtist(newArtist) {
         userAxios.post("/protected/artists", newArtist)
             .then(res => {
                 setArtists(artists => [...artists, res.data])
+            })
+            .catch(err => console.log(err.response.data.errMsg))
+    }
+
+    // edit artist post
+    function editArtist(updatedPost, artistId) {
+        userAxios.put(`/protected/artists/${artistId}`, updatedPost)
+            .then(res => {
+                setArtists(artists => artists.map(artist => artist._id === artistId ? res.data : artist))
+            })
+            .catch(err => console.log(err.response.data.errMsg))
+    }
+
+    // delete artist post
+    function deleteArtist(artistId) {
+        userAxios.delete(`/protected/artists/${artistId}`)
+            .then(res => {
+                setArtists(artists => artists.filter(artist => artist._id !== artistId))
             })
             .catch(err => console.log(err.response.data.errMsg))
     }
@@ -63,7 +82,9 @@ export default function UserProvider(props) {
                 signup,
                 login,
                 getUserArtists,
-                addArtist
+                addArtist,
+                editArtist,
+                deleteArtist
             }}
         >
             {props.children}
