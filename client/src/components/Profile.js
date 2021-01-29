@@ -1,10 +1,19 @@
+import { useEffect } from 'react'
 import ArtistForm from './ArtistForm.js'
+import ArtistList from './ArtistList.js'
 
-export default function Profile() {
+export default function Profile(props) {
+    const { user: {username}, artists, getUserArtists, addArtist} = props
+
+    useEffect(() => {
+        getUserArtists()
+    }, [])
+
     return (
         <div>
-            {/* artist form */}
-            {/* User's list of fav artists (name + description) */}
+            <h1>Hello, {username}</h1>
+            <ArtistForm addArtist={addArtist} />
+            <ArtistList artists={artists} />
         </div>
     )
 }

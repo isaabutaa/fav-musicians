@@ -1,7 +1,9 @@
 import {useState} from 'react'
 
-export default function ArtistForm() {
-    const [artist, setArtist] = useState({ name: "", description: "" })
+export default function ArtistForm(props) {
+    const initInputs = { artistName: "", description: "" }
+    const [artist, setArtist] = useState(initInputs)
+    const {addArtist} = props
 
     function handleChange(e) {
         const {name, value} = e.target
@@ -10,7 +12,8 @@ export default function ArtistForm() {
 
     function handleSubmit(e) {
         e.preventDefault()
-        // addArtist function
+        addArtist(artist)
+        setArtist(initInputs)
     }
 
     return (
@@ -18,8 +21,8 @@ export default function ArtistForm() {
             <input
                 type="text"
                 placeholder="Artist/Group name"
-                name="name"
-                value={artist.name}
+                name="artistName"
+                value={artist.artistName}
                 onChange={handleChange}
             />
             <input

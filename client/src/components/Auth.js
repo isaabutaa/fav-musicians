@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import AuthForm from './AuthForm.js'
 import { UserContext } from '../context/UserProvider.js'
 
-export default function Auth() {
+export default function Auth(props) {
     const [loginInfo, setLoginInfo] = useState({ username: "", password: ""})
     const [isLoginMode, setIsLoginMode] = useState(true)
     const { signup, login } = useContext(UserContext)
@@ -17,10 +17,11 @@ export default function Auth() {
 
     function handleSubmit(e) {
         e.preventDefault()
-        isLoginMode ?
-            login(loginInfo)
-        :
-            signup(loginInfo)
+        loginOrSignup()
+    }
+
+    function loginOrSignup() {
+        isLoginMode ? login(loginInfo) : signup(loginInfo)
     }
 
     const formBtnText = isLoginMode ? "Login" : "Sign Up"

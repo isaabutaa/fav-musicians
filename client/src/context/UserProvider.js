@@ -37,16 +37,21 @@ export default function UserProvider(props) {
     }
 
     // get artists
-    function getData() {
-        userAxios.get("/protected/artists")
-            .then(res => console.log(res))
+    function getUserArtists() {
+        userAxios.get("/protected/artists/user")
+            .then(res => {
+                localStorage.setItem("artists", JSON.stringify(artists))
+                setArtists(res.data)
+            })
             .catch(err => console.log(err.response.data.errMsg))
     }
 
     // add artist
     function addArtist(newArtist) {
         userAxios.post("/protected/artists", newArtist)
-            .then(res => console.log(res))
+            .then(res => {
+                setArtists(artists => [...artists, res.data])
+            })
             .catch(err => console.log(err.response.data.errMsg))
     }
 
@@ -57,7 +62,7 @@ export default function UserProvider(props) {
                 artists,
                 signup,
                 login,
-                getData,
+                getUserArtists,
                 addArtist
             }}
         >
