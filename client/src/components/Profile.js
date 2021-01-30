@@ -1,9 +1,10 @@
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
+import { UserContext } from '../context/UserProvider.js'
 import ArtistForm from './ArtistForm.js'
 import ArtistList from './ArtistList.js'
 
-export default function Profile(props) {
-    const { user: {username}, artists, getUserArtists, addArtist, editArtist, deleteArtist } = props
+export default function Profile() {
+    const { user: {username}, artists, getUserArtists, addArtist, editArtist, deleteArtist } = useContext(UserContext)
 
     useEffect(() => {
         getUserArtists()

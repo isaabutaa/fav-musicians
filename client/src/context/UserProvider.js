@@ -37,6 +37,13 @@ export default function UserProvider(props) {
             .catch(err => console.log(err.response.data.errMsg))
     }
 
+    // logout
+    function logout() {
+        localStorage.removeItem("user")
+        localStorage.removeItem("token")
+        setUserState(initUserState)
+    }
+
     // get user artists
     function getUserArtists() {
         userAxios.get("/protected/artists/user")
@@ -81,6 +88,7 @@ export default function UserProvider(props) {
                 artists,
                 signup,
                 login,
+                logout,
                 getUserArtists,
                 addArtist,
                 editArtist,

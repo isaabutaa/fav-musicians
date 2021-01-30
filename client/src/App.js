@@ -7,19 +7,11 @@ import Profile from './components/Profile.js'
 
 
 export default function App() {
-    const { 
-        user, 
-        token, 
-        artists, 
-        getUserArtists, 
-        addArtist,
-        editArtist,
-        deleteArtist 
-    } = useContext(UserContext)
+    const {token, logout} = useContext(UserContext)
 
     return (
         <div>
-            <Navbar />
+            <Navbar token={token} logout={logout} />
             <Switch>
                 <Route exact path="/">
                     { token ? 
@@ -29,14 +21,7 @@ export default function App() {
                     }
                 </Route>
                 <Route path="/profile">
-                    <Profile 
-                        user={user}
-                        artists={artists} 
-                        getUserArtists={getUserArtists} 
-                        addArtist={addArtist} 
-                        editArtist={editArtist}
-                        deleteArtist={deleteArtist}
-                    />
+                    <Profile />
                 </Route>
             </Switch>
         </div>
