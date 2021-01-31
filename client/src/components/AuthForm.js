@@ -12,22 +12,24 @@ export default function AuthForm(props) {
     } = props
 
     return (
-        <form onSubmit={handleSubmit} >
-            <input 
-                type="text" 
-                placeholder="Username" 
-                name="username" 
-                value={username} 
-                onChange={handleChange} 
-            />
-            <input 
-                type="text" 
-                placeholder="Password" 
-                name="password" 
-                value={password} 
-                onChange={handleChange} 
-            />
-            <button>{btnText}</button>
-        </form>
+        <div className="form-container">
+            <form className="form" onSubmit={handleSubmit} >
+                <input 
+                    type="text" 
+                    placeholder="Username" 
+                    name="username" 
+                    value={username} 
+                    onChange={handleChange} 
+                />
+                <input 
+                    type="text" 
+                    placeholder="Password" 
+                    name="password" 
+                    value={password} 
+                    onChange={handleChange} 
+                />
+                <button>{btnText}</button>
+            </form>
+        </div>
     )
 }

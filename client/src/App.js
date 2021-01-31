@@ -12,7 +12,7 @@ export default function App() {
 
     return (
         <div>
-            <Navbar token={token} logout={logout} />
+            { token && <Navbar token={token} logout={logout} /> }
             <Switch>
                 <Route exact path="/">
                     { token ? <Redirect to="/profile" /> : <Auth /> }

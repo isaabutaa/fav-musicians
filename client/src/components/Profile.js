@@ -12,7 +12,7 @@ export default function Profile() {
 
     return (
         <div>
-            <h1>Hello, {username}</h1>
+            <h1 className="user-greeting">Hello, <span className="username">{username}</span></h1>
             <ArtistForm submit={addArtist} />
             <ArtistList 
                 artists={artists}

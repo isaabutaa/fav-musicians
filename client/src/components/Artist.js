@@ -14,8 +14,8 @@ export default function Artist(props) {
                 _id={_id}
             /> 
         : 
-            <>
-                <h2>{artistName}</h2>
+            <div className="artist">
+                <h2 className="artist-name">{artistName}</h2>
                 <p>{description}</p>
                 <p>Likes: {likes}</p>
                 { editArtist && deleteArtist &&
@@ -24,7 +24,7 @@ export default function Artist(props) {
                         <button onClick={() => deleteArtist(_id)}>Delete</button>
                     </>
                 }
-            </>
+            </div>
     return (
         <div>
             {formDisplay}

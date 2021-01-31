@@ -18,7 +18,7 @@ export default function ArtistForm(props) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
             <input
                 type="text"
                 placeholder="Artist/Group name"

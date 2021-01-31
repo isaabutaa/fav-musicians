@@ -31,7 +31,7 @@ export default function Auth(props) {
 
     return (
         <div>
-            <h1>Favorite Musicians app</h1>
+            <h1 className="header">Favorite Musicians app</h1>
             <>
                 <AuthForm
                     btnText={formBtnText}
@@ -39,7 +39,7 @@ export default function Auth(props) {
                     handleSubmit={handleSubmit}
                     loginInfo={loginInfo}
                 />
-                <p onClick={() => setIsLoginMode(prev => !prev)}>
+                <p className="member-text" onClick={() => setIsLoginMode(prev => !prev)}>
                     {toggleLoginMode}
                 </p>
             </>
