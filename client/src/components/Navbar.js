@@ -5,7 +5,6 @@ export default function Navbar(props) {
     const logoutBtnDisplay = token && <button onClick={() => logout()}>Logout</button>
     return (
         <div className="navbar">
-            <Link to="/">Login</Link>
             <Link to="/profile">Profile</Link>
             <Link to="/home">Home</Link>
             {logoutBtnDisplay}

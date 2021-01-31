@@ -18,8 +18,12 @@ export default function Artist(props) {
                 <h2>{artistName}</h2>
                 <p>{description}</p>
                 <p>Likes: {likes}</p>
-                <button onClick={() => setOpenEditFormToggle(prev => !prev)}>Edit</button> 
-                <button onClick={() => deleteArtist(_id)}>Delete</button>
+                { editArtist && deleteArtist &&
+                    <>
+                        <button onClick={() => setOpenEditFormToggle(prev => !prev)}>Edit</button> 
+                        <button onClick={() => deleteArtist(_id)}>Delete</button>
+                    </>
+                }
             </>
     return (
         <div>
