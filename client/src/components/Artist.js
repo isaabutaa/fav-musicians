@@ -2,11 +2,12 @@ import {useState, useContext} from 'react'
 import {HomeContext} from '../context/HomeProvider.js'
 import ArtistForm from './ArtistForm.js'
 import CommentForm from './CommentForm.js'
+import CommentList from './CommentList.js'
 
 export default function Artist(props) {
     const [openEditFormToggle, setOpenEditFormToggle] = useState(false)
     const [openCommentFormToggle, setOpenCommentFormToggle] = useState(false)
-    const {getComments, addComment} = useContext(HomeContext)
+    const {getComments, addComment, artistComments} = useContext(HomeContext)
     const {artistName, description, likes, _id, editArtist, deleteArtist} = props
     const addCommentBtn = <button onClick={() => setOpenCommentFormToggle(!openCommentFormToggle)}>Add Comment</button>
     const seeCommentsBtn = <button onClick={() => getComments(_id)}>See Comments</button>
@@ -38,6 +39,7 @@ export default function Artist(props) {
                             {seeCommentsBtn}
                         </>
                 }
+                <CommentList artistId={_id} artistComments={artistComments} />
             </div>
     const commentFormDisplay = openCommentFormToggle && <CommentForm artistId={_id} addComment={addComment} />
     return (

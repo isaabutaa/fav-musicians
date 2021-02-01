@@ -1,17 +1,18 @@
 import {useState} from 'react'
 
 export default function CommentForm(props) {
-    const [comment, setComment] = useState("")
+    const [comment, setComment] = useState({ comment: "" })
     const {addComment, artistId} = props
 
     function handleChange(e) {
-        setComment(e.target.value)
+        const {name, value} = e.target
+        setComment(comment => ({...comment, [name]: value}))
     }
 
     function handleSubmit(e) {
         e.preventDefault()
         addComment(comment, artistId)
-        setComment("")
+        setComment({ comment: "" })
     }
 
     return (
@@ -20,7 +21,7 @@ export default function CommentForm(props) {
                 type="text" 
                 placeholder="add comment here"
                 name="comment"
-                value={comment}
+                value={comment.comment}
                 onChange={handleChange}
             />
             <button>Submit comment</button>

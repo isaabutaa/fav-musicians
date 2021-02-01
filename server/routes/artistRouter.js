@@ -73,7 +73,7 @@ artistRouter.route("/:artistId")
 
 // user post comment to an issue
 artistRouter.post("/comments/:artistId", (req, res, next) => {
-    console.log("added comment")
+    console.log(req.body)
     req.body.user = req.user._id
     req.body.artist = req.params.artistId
     const newComment = new Comment(req.body)

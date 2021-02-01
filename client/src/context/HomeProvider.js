@@ -16,21 +16,26 @@ export default function HomeProvider(props) {
 
     function addComment(comment, artistId) {
         userAxios.post(`/protected/artists/comments/${artistId}`, comment)
-            .then(res => console.log(res))
+            .then(res => {
+                setArtistComments(comments => [...comments, res.data])
+            })
             .catch(err => console.error(err.response.data.errMsg))
     }
 
     function getComments(artistId) {
         userAxios.get(`/protected/artists/comments/${artistId}`)
-            .then(res => console.log(res))
+            .then(res => {
+                setArtistComments(res.data)
+            })
             .catch(err => console.err(err.response.data.errMsg))
     }
 
     return (
         <HomeContext.Provider 
             value={{
-                getAllArtists,
                 allUserArtists,
+                artistComments,
+                getAllArtists,
                 addComment,
                 getComments
             }}
