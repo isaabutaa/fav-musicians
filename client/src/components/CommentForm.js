@@ -1,7 +1,8 @@
 import {useState} from 'react'
 
-export default function CommentForm() {
-    const [comment, setComment] = useState("Add comment here")
+export default function CommentForm(props) {
+    const [comment, setComment] = useState("")
+    const {addComment, artistId} = props
 
     function handleChange(e) {
         setComment(e.target.value)
@@ -9,13 +10,15 @@ export default function CommentForm() {
 
     function handleSubmit(e) {
         e.preventDefault()
-        // addComment
+        addComment(comment, artistId)
+        setComment("")
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <textarea 
+        <form className="form" onSubmit={handleSubmit}>
+            <input 
                 type="text" 
+                placeholder="add comment here"
                 name="comment"
                 value={comment}
                 onChange={handleChange}

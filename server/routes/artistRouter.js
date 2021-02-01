@@ -86,7 +86,20 @@ artistRouter.post("/comments/:artistId", (req, res, next) => {
     })
 })
 
-// get comments
+// get comments by artist
+artistRouter.get("/comments/:artistId", (req, res, next) => {
+    console.log("got comments")
+    Comment.find(
+        {artist: req.params.artistId},
+        (err, comments) => {
+            if(err) {
+                res.status(500)
+                return next(err)
+            }
+            return res.status(200).send(comments)
+        }
+    )
+})
 
 
 

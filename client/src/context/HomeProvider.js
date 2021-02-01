@@ -11,17 +11,19 @@ export default function HomeProvider(props) {
             .then(({data}) => {
                 setAllUserArtists(data)
             })
-            .catch(err => console.error(err))
+            .catch(err => console.error(err.response.data.errMsg))
     }
 
-    function addComment(artistId, comment) {
+    function addComment(comment, artistId) {
         userAxios.post(`/protected/artists/comments/${artistId}`, comment)
             .then(res => console.log(res))
-            .catch(err => console.error(err))
+            .catch(err => console.error(err.response.data.errMsg))
     }
 
-    function getComments() {
-        // get request
+    function getComments(artistId) {
+        userAxios.get(`/protected/artists/comments/${artistId}`)
+            .then(res => console.log(res))
+            .catch(err => console.err(err.response.data.errMsg))
     }
 
     return (

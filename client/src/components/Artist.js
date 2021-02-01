@@ -1,20 +1,22 @@
 import {useState, useContext} from 'react'
 import {HomeContext} from '../context/HomeProvider.js'
 import ArtistForm from './ArtistForm.js'
+import CommentForm from './CommentForm.js'
 
 export default function Artist(props) {
     const [openEditFormToggle, setOpenEditFormToggle] = useState(false)
-    const {getComments} = useContext(HomeContext)
+    const [openCommentFormToggle, setOpenCommentFormToggle] = useState(false)
+    const {getComments, addComment} = useContext(HomeContext)
     const {artistName, description, likes, _id, editArtist, deleteArtist} = props
-
-    const commentsBtn = <button onClick={() => getComments()}>See Comments</button>
+    const addCommentBtn = <button onClick={() => setOpenCommentFormToggle(!openCommentFormToggle)}>Add Comment</button>
+    const seeCommentsBtn = <button onClick={() => getComments(_id)}>See Comments</button>
     const editDeleteBtns = (
         <>
             <button onClick={() => setOpenEditFormToggle(prev => !prev)}>Edit</button> 
             <button onClick={() => deleteArtist(_id)}>Delete</button>
         </>
     )
-    const formDisplay = openEditFormToggle 
+    const artistFormDisplay = openEditFormToggle 
         ? 
             <ArtistForm
                 artistName={artistName}
@@ -27,11 +29,21 @@ export default function Artist(props) {
                 <h2 className="artist-name">{artistName}</h2>
                 <p>{description}</p>
                 <p>Likes: {likes}</p>
-                { editArtist && deleteArtist ? editDeleteBtns : commentsBtn }
+                { 
+                    editArtist && deleteArtist ? 
+                        editDeleteBtns 
+                    : 
+                        <>
+                            {addCommentBtn}
+                            {seeCommentsBtn}
+                        </>
+                }
             </div>
+    const commentFormDisplay = openCommentFormToggle && <CommentForm artistId={_id} addComment={addComment} />
     return (
         <div>
-            {formDisplay}
+            {artistFormDisplay}
+            {commentFormDisplay}
         </div>
     )
 }
