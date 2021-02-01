@@ -6,6 +6,9 @@ const {useContext, useEffect} = React
 
 export default function Home() {
     const {getAllArtists, allUserArtists} = useContext(HomeContext)
+    const sortedArtists = allUserArtists.sort((a, b) => {
+        return b.likes - a.likes
+    })
 
     useEffect(() => {
         getAllArtists()
@@ -15,7 +18,7 @@ export default function Home() {
         <div>
             {/* Home feed - see other users' posts and be able to upvote/downvote a post. Maybe have ability to click on another users public profile?*/}
             <h1>Home page. See other users' posts</h1>
-            {allUserArtists.map(artist => <Artist key={artist._id} {...artist} />)}
+            {sortedArtists.map(artist => <Artist key={artist._id} {...artist} />)}
             {/* iabutaa's favorite artists:
                 <likes> alicia keys - I love Alicia Keys' music because it's very honest. I don't listen to a lot of R&B, but I do listen to her.
                     <comment1 by @user: Yeah I love her music too>

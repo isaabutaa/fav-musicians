@@ -7,9 +7,9 @@ import CommentList from './CommentList.js'
 export default function Artist(props) {
     const [openEditFormToggle, setOpenEditFormToggle] = useState(false)
     const [openCommentFormToggle, setOpenCommentFormToggle] = useState(false)
-    const {getComments, addComment, artistComments} = useContext(HomeContext)
+    const {likePost, getComments, addComment, artistComments} = useContext(HomeContext)
     const {artistName, description, likes, _id, editArtist, deleteArtist} = props
-    const likeBtn = <button>Like</button>
+    const likeBtn = <button onClick={() => likePost(_id)}>Like</button>
     const addCommentBtn = <button onClick={() => setOpenCommentFormToggle(!openCommentFormToggle)}>Add Comment</button>
     const seeCommentsBtn = <button onClick={() => getComments(_id)}>See Comments</button>
     const editDeleteBtns = (

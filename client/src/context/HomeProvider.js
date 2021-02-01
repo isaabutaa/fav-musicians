@@ -33,7 +33,9 @@ export default function HomeProvider(props) {
 
     function likePost(artistId) {
         userAxios.put(`/protected/artists/likes/${artistId}`)
-            .then(res => console.log(res))
+            .then(res => {
+                setAllUserArtists(artists => artists.map(artist => artist._id === artistId ? res.data : artist))
+            })
             .catch(err => console.error(err.response.data.errMsg))
     }
 
