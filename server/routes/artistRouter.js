@@ -86,5 +86,8 @@ artistRouter.post("/comments/:artistId", (req, res, next) => {
     })
 })
 
+// get comments
+
+
 
 module.exports = artistRouter

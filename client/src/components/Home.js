@@ -1,23 +1,15 @@
 import * as React from 'react'
-import {userAxios} from '../context/userAxios.js'
+import {HomeContext} from '../context/HomeProvider.js'
 import Artist from './Artist.js'
 
-const {useState, useEffect} = React
+const {useContext, useEffect} = React
 
 export default function Home() {
-    const [allUserArtists, setAllUserArtists] = useState([])
+    const {getAllArtists, allUserArtists} = useContext(HomeContext)
 
     useEffect(() => {
         getAllArtists()
     }, [])
-
-    function getAllArtists() {
-        userAxios.get("/protected/artists")
-            .then(({data}) => {
-                setAllUserArtists(data)
-            })
-            .catch(err => console.error(err))
-    }
 
     return (
         <div>
