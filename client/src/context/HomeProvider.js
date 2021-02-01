@@ -32,7 +32,15 @@ export default function HomeProvider(props) {
     }
 
     function likePost(artistId) {
-        userAxios.put(`/protected/artists/likes/${artistId}`)
+        userAxios.put(`/protected/artists/upvote/${artistId}`)
+            .then(res => {
+                setAllUserArtists(artists => artists.map(artist => artist._id === artistId ? res.data : artist))
+            })
+            .catch(err => console.error(err.response.data.errMsg))
+    }
+
+    function unlikePost(artistId) {
+        userAxios.put(`/protected/artists/downvote/${artistId}`)
             .then(res => {
                 setAllUserArtists(artists => artists.map(artist => artist._id === artistId ? res.data : artist))
             })
@@ -47,7 +55,8 @@ export default function HomeProvider(props) {
                 getAllArtists,
                 addComment,
                 getComments,
-                likePost
+                likePost,
+                unlikePost
             }}
         >
             {props.children}

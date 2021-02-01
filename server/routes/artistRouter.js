@@ -72,10 +72,26 @@ artistRouter.route("/:artistId")
     })
 
 // like an artist post
-artistRouter.put("/likes/:artistId", (req, res, next) => {
+artistRouter.put("/upvote/:artistId", (req, res, next) => {
     Artist.findOneAndUpdate(
         { _id: req.params.artistId },
         { $inc: { likes: 1 } },
+        { new: true },
+        (err, updatedArtist) => {
+            if(err) {
+                res.status(500)
+                return next(err)
+            }
+            return res.status(201).send(updatedArtist)
+        }
+    )
+})
+
+// dislike a post
+artistRouter.put("/downvote/:artistId", (req, res, next) => {
+    Artist.findOneAndUpdate(
+        { _id: req.params.artistId },
+        { $inc: { likes: -1 } },
         { new: true },
         (err, updatedArtist) => {
             if(err) {
