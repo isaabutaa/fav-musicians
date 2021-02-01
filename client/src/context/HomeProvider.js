@@ -5,6 +5,7 @@ export const HomeContext = createContext()
 export default function HomeProvider(props) {
     const [allUserArtists, setAllUserArtists] = useState([])
     const [artistComments, setArtistComments] = useState([])
+    const [artistLikes, setArtistLikes] = useState(0)
 
     function getAllArtists() {
         userAxios.get("/protected/artists")
@@ -30,6 +31,12 @@ export default function HomeProvider(props) {
             .catch(err => console.err(err.response.data.errMsg))
     }
 
+    function likePost(artistId) {
+        userAxios.put(`/protected/artists/likes/${artistId}`)
+            .then(res => console.log(res))
+            .catch(err => console.error(err.response.data.errMsg))
+    }
+
     return (
         <HomeContext.Provider 
             value={{
@@ -37,7 +44,8 @@ export default function HomeProvider(props) {
                 artistComments,
                 getAllArtists,
                 addComment,
-                getComments
+                getComments,
+                likePost
             }}
         >
             {props.children}

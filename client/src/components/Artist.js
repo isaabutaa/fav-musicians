@@ -9,6 +9,7 @@ export default function Artist(props) {
     const [openCommentFormToggle, setOpenCommentFormToggle] = useState(false)
     const {getComments, addComment, artistComments} = useContext(HomeContext)
     const {artistName, description, likes, _id, editArtist, deleteArtist} = props
+    const likeBtn = <button>Like</button>
     const addCommentBtn = <button onClick={() => setOpenCommentFormToggle(!openCommentFormToggle)}>Add Comment</button>
     const seeCommentsBtn = <button onClick={() => getComments(_id)}>See Comments</button>
     const editDeleteBtns = (
@@ -35,6 +36,7 @@ export default function Artist(props) {
                         editDeleteBtns 
                     : 
                         <>
+                            {likeBtn}
                             {addCommentBtn}
                             {seeCommentsBtn}
                         </>
