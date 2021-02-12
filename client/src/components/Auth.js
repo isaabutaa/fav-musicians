@@ -3,7 +3,7 @@ import AuthForm from './AuthForm.js'
 import { UserContext } from '../context/UserProvider.js'
 
 export default function Auth(props) {
-    const [loginInfo, setLoginInfo] = useState({ username: "", password: ""})
+    const [loginInfo, setLoginInfo] = useState({ username: "", password: "" })
     const [isLoginMode, setIsLoginMode] = useState(true)
     const { signup, login } = useContext(UserContext)
 

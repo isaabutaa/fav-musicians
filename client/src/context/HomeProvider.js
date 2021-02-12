@@ -5,7 +5,6 @@ export const HomeContext = createContext()
 export default function HomeProvider(props) {
     const [allUserArtists, setAllUserArtists] = useState([])
     const [artistComments, setArtistComments] = useState([])
-    const [artistLikes, setArtistLikes] = useState(0)
 
     function getAllArtists() {
         userAxios.get("/protected/artists")
