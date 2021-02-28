@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {HomeContext} from '../context/HomeProvider.js'
-import Artist from './Artist.js'
+import PublicArtist from './PublicArtist.js'
 
 const {useContext, useEffect} = React
 
@@ -11,11 +11,10 @@ export default function Home() {
         getAllArtists()
     }, [])
     
-    const sortedArtists = allUserArtists.sort((a, b) =>  b.likes - a.likes)
-    const mappedArtists = sortedArtists.map(artist => <Artist key={artist._id} {...artist} />)
+    const sortedByLikes = allUserArtists.sort((a, b) =>  b.likes - a.likes)
+    const mappedArtists = sortedByLikes.map(artist => <PublicArtist key={artist._id} {...artist} />)
     return (
         <div>
-            <h1>Home page. See other users' posts</h1>
             {mappedArtists}
         </div>
     )

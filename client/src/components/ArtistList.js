@@ -2,11 +2,9 @@ import Artist from './Artist.js'
 
 export default function ArtistList(props) {
     const {artists, editArtist, deleteArtist} = props
-    const sortedArtists = artists.sort((a, b) => {
-        return b.likes - a.likes
-    })
+    const sortedByLikes = artists.sort((a, b) => b.likes - a.likes)
 
-    const artistComponents = sortedArtists.map(artist => (
+    const mappedArtists = sortedByLikes.map(artist => (
         <Artist 
             key={artist._id} 
             {...artist} 
@@ -16,7 +14,7 @@ export default function ArtistList(props) {
     ))
     return (
         <div>
-            {artistComponents}
+            {mappedArtists}
         </div>
     )
 }

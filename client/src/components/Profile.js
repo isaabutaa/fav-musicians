@@ -4,7 +4,7 @@ import ArtistForm from './ArtistForm.js'
 import ArtistList from './ArtistList.js'
 
 export default function Profile() {
-    const { user: {username}, artists, getUserArtists, addArtist, editArtist, deleteArtist } = useContext(UserContext)
+    const { user: { username }, artists, getUserArtists, addArtist, editArtist, deleteArtist } = useContext(UserContext)
 
     useEffect(() => {
         getUserArtists()

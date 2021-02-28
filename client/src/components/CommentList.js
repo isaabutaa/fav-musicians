@@ -1,10 +1,10 @@
 
 export default function CommentList(props) {
     const { artistComments } = props
-    const comments = artistComments.map(comment => <p key={comment._id}>{comment.comment}</p>)
+    const comments = artistComments.map(comment => <li key={comment._id}>{comment.comment}</li>)
     return (
-        <div className="comment-list">
+        <ol className="comment-list">
             {comments}
-        </div>
+        </ol>
     )
 }
