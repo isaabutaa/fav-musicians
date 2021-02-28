@@ -15,7 +15,7 @@ export default function HomeProvider(props) {
     }
 
     function addComment(comment, artistId) {
-        userAxios.post(`/protected/artists/comments/${artistId}`, comment)
+        userAxios.post(`/protected/comments/${artistId}`, comment)
             .then(res => setAllUserArtists(prevArtists => prevArtists.map(artist => {
                 if(artist._id !== artistId) {
                     return artist

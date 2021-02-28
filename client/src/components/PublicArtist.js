@@ -8,7 +8,7 @@ export default function PublicArtist(props) {
     const [openCommentFormToggle, setOpenCommentFormToggle] = useState(false)
     const [likeOrDislike, setLikeOrDislike] = useState(true)
     const [displayComments, setDisplayComments] = useState(false)
-    const { artistName, description, comments, likes, _id } = props
+    const { artistName, description, comments, likes, _id, user: { username } } = props
 
     const toggleLikeBtn = () => {
         if(likeOrDislike) {
@@ -28,6 +28,7 @@ export default function PublicArtist(props) {
     return (
         <div className="artist">
             <>
+                <h3>@{username}</h3>
                 <h3 className="artist-name">{artistName}</h3>
                 <p>{description}</p>
                 <p>Likes: {likes}</p> 
