@@ -18,10 +18,10 @@ export default function App() {
                     { token ? <Redirect to="/profile" /> : <Auth /> }
                 </Route>
                 <Route path="/profile">
-                    { token ? <Profile /> : <Redirect to="/" /> }
+                    { !token ? <Redirect to="/" /> : <Profile /> }
                 </Route>
                 <Route path="/home">
-                    { token ? <Home /> : <Redirect to="/" /> }
+                    { !token ? <Redirect to="/" /> : <Home /> }
                 </Route>
             </Switch>
         </div>
