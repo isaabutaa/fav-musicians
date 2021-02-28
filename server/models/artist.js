@@ -10,21 +10,13 @@ const artistSchema = new Schema({
         type: String,
         required: true
     },
-    comments: {
-        type: [
-            {
-                comment: {
-                    type: String,
-                    required: true
-                },
-                user: {
-                    type: Schema.Types.ObjectId,
-                    ref: "User",
-                    required: true
-                }
-            }
-        ]
-    },
+    comments: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Comment",
+            required: true
+        }
+    ],
     likes: {
         type: Number,
         default: 0
@@ -35,5 +27,12 @@ const artistSchema = new Schema({
         required: true
     }
 })
+
+//  pre-save hook to hide user password when document is populated
+artistSchema.methods.removePassword = function() {
+    const artist = this.toObject()
+    delete artist.user.password
+    return artist
+}
 
 module.exports = mongoose.model("Artist", artistSchema)

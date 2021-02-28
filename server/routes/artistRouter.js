@@ -1,17 +1,23 @@
 const express = require('express')
 const artistRouter = express.Router()
 const Artist = require('../models/artist.js')
-const Comment = require('../models/comment.js')
+// const Comment = require('../models/comment.js')
 
 // get all and post one
 artistRouter.route("/")
     .get((req, res, next) => {
-        Artist.find((err, artists) => {
+        Artist.find()
+        .populate('user')
+        .populate({
+            path: 'comments',
+            populate: { path: 'user' }
+        })
+        .exec((err, artists) => {
             if(err) {
                 res.status(500)
                 return next(err)
             }
-            return res.status(200).send(artists)
+            return res.status(200).send(artists.map(artist => artist.removePassword()))
         })
     })
     .post((req, res, next) => {
@@ -30,14 +36,17 @@ artistRouter.route("/")
 // get artists by user
 artistRouter.route("/user")
     .get((req, res, next) => {
-        Artist.find(
-            { user: req.user._id },
-            (err, artists) => {
+        Artist.find({ user: req.user._id })
+            .populate({
+                path: 'comments',
+                populate: { path: 'user'}
+            })
+            .exec((err, artists) => {
                 if(err) {
                     res.status(500)
                     return next(err)
                 }
-                return res.status(200).send(artists)
+                return res.status(200).send(artists.map(artist => artist.removePassword()))
             }
         )
     })
@@ -102,40 +111,5 @@ artistRouter.put("/downvote/:artistId", (req, res, next) => {
         }
     )
 })
-
-// user post comment to an issue
-artistRouter.post("/comments/:artistId", (req, res, next) => {
-    req.body.user = req.user._id
-    const comment = req.body
-    Artist.findOneAndUpdate(
-        { _id: req.params.artistId },
-        { $push: { comments: comment } },
-        { new: true },
-        (err, updatedArtist) => {
-            if(err) {
-                res.status(500)
-                return next(err)
-            }
-            return res.status(201).send(updatedArtist.comments[updatedArtist.comments.length - 1])
-        }
-    )
-})
-
-// get comments by artist
-// artistRouter.get("/comments/:artistId", (req, res, next) => {
-//     console.log("got comments")
-//     Comment.find(
-//         {artist: req.params.artistId},
-//         (err, comments) => {
-//             if(err) {
-//                 res.status(500)
-//                 return next(err)
-//             }
-//             return res.status(200).send(comments)
-//         }
-//     )
-// })
-
-
 
 module.exports = artistRouter

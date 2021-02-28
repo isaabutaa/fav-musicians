@@ -26,6 +26,7 @@ mongoose.connect("mongodb://localhost:27017/musicians",
 app.use("/auth", require("./routes/authRouter.js"))
 app.use("/protected", expressJwt({ secret: mySecret, algorithms: ['HS256'] }))
 app.use("/protected/artists", require("./routes/artistRouter.js"))
+app.use("/protected/comments", require("./routes/commentRouter.js"))
 
 // error handler
 app.use((err, req, res, next) => {
