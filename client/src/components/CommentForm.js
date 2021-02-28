@@ -2,7 +2,7 @@ import {useState} from 'react'
 
 export default function CommentForm(props) {
     const [comment, setComment] = useState({ comment: "" })
-    const {addComment, artistId} = props
+    const {addComment, artistId, toggleForm} = props
 
     function handleChange(e) {
         const {name, value} = e.target
@@ -13,6 +13,7 @@ export default function CommentForm(props) {
         e.preventDefault()
         addComment(comment, artistId)
         setComment({ comment: "" })
+        toggleForm()
     }
 
     return (

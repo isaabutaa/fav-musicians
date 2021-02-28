@@ -10,6 +10,21 @@ const artistSchema = new Schema({
         type: String,
         required: true
     },
+    comments: {
+        type: [
+            {
+                comment: {
+                    type: String,
+                    required: true
+                },
+                user: {
+                    type: Schema.Types.ObjectId,
+                    ref: "User",
+                    required: true
+                }
+            }
+        ]
+    },
     likes: {
         type: Number,
         default: 0

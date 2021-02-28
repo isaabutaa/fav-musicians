@@ -1,5 +1,5 @@
-import {useState, useContext} from 'react'
-import {HomeContext} from '../context/HomeProvider.js'
+import { useState, useContext } from 'react'
+import { HomeContext } from '../context/HomeProvider.js'
 import ArtistForm from './ArtistForm.js'
 import CommentForm from './CommentForm.js'
 import CommentList from './CommentList.js'
@@ -8,8 +8,8 @@ export default function Artist(props) {
     const [openEditFormToggle, setOpenEditFormToggle] = useState(false)
     const [openCommentFormToggle, setOpenCommentFormToggle] = useState(false)
     const [likeOrDislike, setLikeOrDislike] = useState(true)
-    const {likePost, unlikePost, getComments, addComment, artistComments} = useContext(HomeContext)
-    const {artistName, description, likes, _id, editArtist, deleteArtist} = props
+    const {likePost, unlikePost, addComment} = useContext(HomeContext)
+    const {artistName, description, comments, likes, _id, editArtist, deleteArtist} = props
 
     function toggleLikeBtn() {
         if(likeOrDislike) {
@@ -21,9 +21,13 @@ export default function Artist(props) {
         }
     }
 
+    function toggleCommentForm() {
+        setOpenCommentFormToggle(!openCommentFormToggle)
+    }
+
     const likeBtn = <button onClick={() => toggleLikeBtn()}>{likeOrDislike ? "Like" : "Dislike"}</button>
-    const addCommentBtn = <button onClick={() => setOpenCommentFormToggle(!openCommentFormToggle)}>Add Comment</button>
-    const seeCommentsBtn = <button onClick={() => getComments(_id)}>See Comments</button>
+    const addCommentBtn = <button onClick={() => toggleCommentForm()}>Add Comment</button>
+    const seeCommentsBtn = <button>See Comments</button>
     const editDeleteBtns = (
         <>
             <button onClick={() => setOpenEditFormToggle(prev => !prev)}>Edit</button> 
@@ -53,9 +57,9 @@ export default function Artist(props) {
                             {seeCommentsBtn}
                         </>
                 }
-                <CommentList artistId={_id} artistComments={artistComments} />
+                <CommentList artistComments={comments} />
             </div>
-    const commentFormDisplay = openCommentFormToggle && <CommentForm artistId={_id} addComment={addComment} />
+    const commentFormDisplay = openCommentFormToggle && <CommentForm artistId={_id} addComment={addComment} toggleForm={toggleCommentForm} />
     return (
         <div>
             {artistFormDisplay}

@@ -105,33 +105,36 @@ artistRouter.put("/downvote/:artistId", (req, res, next) => {
 
 // user post comment to an issue
 artistRouter.post("/comments/:artistId", (req, res, next) => {
-    console.log(req.body)
     req.body.user = req.user._id
-    req.body.artist = req.params.artistId
-    const newComment = new Comment(req.body)
-    newComment.save((err, savedComment) => {
-        if(err) {
-            res.status(500)
-            return next(err)
-        }
-        return res.status(201).send(savedComment)
-    })
-})
-
-// get comments by artist
-artistRouter.get("/comments/:artistId", (req, res, next) => {
-    console.log("got comments")
-    Comment.find(
-        {artist: req.params.artistId},
-        (err, comments) => {
+    const comment = req.body
+    Artist.findOneAndUpdate(
+        { _id: req.params.artistId },
+        { $push: { comments: comment } },
+        { new: true },
+        (err, updatedArtist) => {
             if(err) {
                 res.status(500)
                 return next(err)
             }
-            return res.status(200).send(comments)
+            return res.status(201).send(updatedArtist.comments[updatedArtist.comments.length - 1])
         }
     )
 })
+
+// get comments by artist
+// artistRouter.get("/comments/:artistId", (req, res, next) => {
+//     console.log("got comments")
+//     Comment.find(
+//         {artist: req.params.artistId},
+//         (err, comments) => {
+//             if(err) {
+//                 res.status(500)
+//                 return next(err)
+//             }
+//             return res.status(200).send(comments)
+//         }
+//     )
+// })
 
 
 

@@ -1,10 +1,10 @@
 import { userAxios } from './userAxios.js'
 import { useState, createContext } from 'react'
+
 export const HomeContext = createContext()
 
 export default function HomeProvider(props) {
     const [allUserArtists, setAllUserArtists] = useState([])
-    const [artistComments, setArtistComments] = useState([])
 
     function getAllArtists() {
         userAxios.get("/protected/artists")
@@ -16,18 +16,16 @@ export default function HomeProvider(props) {
 
     function addComment(comment, artistId) {
         userAxios.post(`/protected/artists/comments/${artistId}`, comment)
-            .then(res => {
-                setArtistComments(comments => [...comments, res.data])
-            })
+            .then(res => setAllUserArtists(prevArtists => prevArtists.map(artist => {
+                if(artist._id !== artistId) {
+                    return artist
+                } 
+                return {
+                    ...artist,
+                    comments: [...artist.comments, res.data]
+                }
+            })))
             .catch(err => console.error(err.response.data.errMsg))
-    }
-
-    function getComments(artistId) {
-        userAxios.get(`/protected/artists/comments/${artistId}`)
-            .then(res => {
-                setArtistComments(res.data)
-            })
-            .catch(err => console.err(err.response.data.errMsg))
     }
 
     function likePost(artistId) {
@@ -50,10 +48,8 @@ export default function HomeProvider(props) {
         <HomeContext.Provider 
             value={{
                 allUserArtists,
-                artistComments,
                 getAllArtists,
                 addComment,
-                getComments,
                 likePost,
                 unlikePost
             }}
