@@ -37,7 +37,7 @@ export default function HomeProvider(props) {
                     }
                     return {
                         ...artist,
-                        likes: res.data.likes
+                        likes: res.data.likes || artist.likes
                     }
                 }))
             })
@@ -51,7 +51,7 @@ export default function HomeProvider(props) {
                     if(artist._id !== artistId) return artist
                     return {
                         ...artist,
-                        likes: res.data.likes
+                        likes: res.data.likes || artist.likes
                     }
                 }))
             })
