@@ -25,7 +25,7 @@ export default function CommentForm(props) {
                 value={comment.comment}
                 onChange={handleChange}
             />
-            <button>Submit comment</button>
+            <button>Submit</button>
         </form>
     )
 }

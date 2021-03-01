@@ -1,7 +1,7 @@
 const express = require('express')
+const artist = require('../models/artist.js')
 const artistRouter = express.Router()
 const Artist = require('../models/artist.js')
-// const Comment = require('../models/comment.js')
 
 // get all and post one
 artistRouter.route("/")
@@ -83,8 +83,12 @@ artistRouter.route("/:artistId")
 // like an artist post
 artistRouter.put("/upvote/:artistId", (req, res, next) => {
     Artist.findOneAndUpdate(
-        { _id: req.params.artistId },
-        { $inc: { likes: 1 } },
+        { _id: req.params.artistId, likedUsers: { $nin: [req.user._id] } },
+        { 
+            $inc: { likes: 1 },
+            $pull: { unlikedUsers: req.user._id },
+            $addToSet: { likedUsers: req.user._id }
+        },
         { new: true },
         (err, updatedArtist) => {
             if(err) {
@@ -99,8 +103,12 @@ artistRouter.put("/upvote/:artistId", (req, res, next) => {
 // dislike a post
 artistRouter.put("/downvote/:artistId", (req, res, next) => {
     Artist.findOneAndUpdate(
-        { _id: req.params.artistId },
-        { $inc: { likes: -1 } },
+        { _id: req.params.artistId, unlikedUsers: { $nin: [req.user._id] } },
+        { 
+            $inc: { likes: -1 },
+            $pull: { likedUsers: req.user._id },
+            $addToSet: { unlikedUsers: req.user._id }
+        },
         { new: true },
         (err, updatedArtist) => {
             if(err) {

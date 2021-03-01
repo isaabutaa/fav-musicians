@@ -21,6 +21,8 @@ const artistSchema = new Schema({
         type: Number,
         default: 0
     },
+    likedUsers: [],
+    unlikedUsers: [],
     user: {
         type: Schema.Types.ObjectId,
         ref: "User",
@@ -34,5 +36,12 @@ artistSchema.methods.removePassword = function() {
     delete artist.user.password
     return artist
 }
+
+// post-save hook to populate the user
+artistSchema.post('save', function(doc, next) {
+    doc.populate('user').execPopulate().then(function() {
+        next()
+    })
+})
 
 module.exports = mongoose.model("Artist", artistSchema)
