@@ -1,4 +1,5 @@
 import Artist from './Artist.js'
+import '../css/ArtistList.css'
 
 export default function ArtistList(props) {
     const {artists, editArtist, deleteArtist} = props
@@ -13,7 +14,8 @@ export default function ArtistList(props) {
         />
     ))
     return (
-        <div>
+        <div className="artist-list">
+            { artists.length >= 1 && <h2 style={{textAlign: "center"}}>Your posts:</h2>}
             {mappedArtists}
         </div>
     )

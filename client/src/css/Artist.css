@@ -1,0 +1,42 @@
+.artist {
+    color: #111;
+    text-align: left;
+    width: 85%;
+    margin: 5px auto;
+}
+
+.post-text {
+    border: 3px solid #111;
+    padding: 5px;
+}
+
+.artist-description, .artist-name {
+    display: inline;
+}
+
+.likes {
+    display: inline-block;
+    margin-right: 7.5px;
+    margin-bottom: 0;
+}
+
+.edit-x-btn {
+    display: inline-block;
+    text-align: center;
+    margin: 0 7.5px;
+    width: 55px;
+    font-size: medium;
+    padding: 7.5px;
+    background-color: #222;
+    color: #ffe5b4;
+    font-family: sans-serif;
+}
+
+.edit-x-btn:hover {
+    cursor: pointer;
+}
+
+.comments p {
+    line-height: 0;
+    margin-top: 0;
+}

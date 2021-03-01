@@ -1,0 +1,17 @@
+.artist-list {
+    width: 85vw;
+    margin: auto auto 75px auto;
+}
+
+.public-list {
+    width: 100vw;
+    margin: 0px auto 75px auto;
+}
+
+@media only screen and (min-width: 975px) {
+    .public-list {
+        width: 42.5vw;
+        border-left: 3px solid #111;
+        border-right: 3px solid #111;
+    }
+}

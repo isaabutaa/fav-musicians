@@ -10,11 +10,12 @@ export default function Home() {
     useEffect(() => {
         getAllArtists()
     }, [])
-    
+
     const sortedByLikes = allUserArtists.sort((a, b) =>  b.likes - a.likes)
     const mappedArtists = sortedByLikes.map(artist => <PublicArtist key={artist._id} {...artist} />)
     return (
-        <div>
+        <div className="public-list">
+            { allUserArtists.length >= 1 && <h2 style={{textAlign: "center"}}>Like and comment on other users' posts below!</h2>}
             {mappedArtists}
         </div>
     )

@@ -2,6 +2,7 @@ import { useState, useContext } from 'react'
 import { HomeContext } from '../context/HomeProvider.js'
 import CommentForm from './CommentForm.js'
 import CommentList from './CommentList.js'
+import '../css/PublicArtist.css'
 
 export default function PublicArtist(props) {
     const {likePost, unlikePost, addComment} = useContext(HomeContext)
@@ -23,21 +24,23 @@ export default function PublicArtist(props) {
     const toggleCommentForm = () => setOpenCommentFormToggle(!openCommentFormToggle)
     const toggleComments = () => setDisplayComments(!displayComments)
     const likeTxt = likeOrDislike ? "Like" : "Dislike"
-    const commentsTxt = displayComments ? "Hide comments" : "View comments"
+    const commentsTxt = displayComments ? <span>Comments &#9650;</span> : <span>Comments &#9660;</span>
     const commentFormDisplay = openCommentFormToggle && <CommentForm artistId={_id} addComment={addComment} toggleForm={toggleCommentForm} />
     return (
         <div className="artist">
             <>
-                <h3>@{username}</h3>
-                <h3 className="artist-name">{artistName}</h3>
-                <p>{description}</p>
-                <p>Likes: {likes}</p> 
-                <button onClick={() => toggleLikeBtn()}>{likeTxt}</button>
-                <button onClick={() => toggleCommentForm()}>Add comment</button>
-                <p onClick={() => toggleComments()} style={{display: "inline-block", marginLeft: "5px"}}>{commentsTxt}</p>
+                <p className="public-username">@{username}:</p>
+                <div>
+                    <h4 className="artist-name">{artistName}</h4>
+                    <p className="artist-description"> - {description}</p>
+                </div>
+                <p className="like-btn" onClick={() => toggleLikeBtn()}>{likeTxt}</p>
+                <p className="likes-num">&#10084; {likes}</p> 
+                <p className="comments-btn" onClick={() => toggleComments()}>{commentsTxt}</p>
             </>
             <>
                 { displayComments && <CommentList artistComments={comments} /> }
+                <p className="add-comment-btn" onClick={() => toggleCommentForm()}>Add comment</p>
                 {commentFormDisplay}
             </>
         </div>
