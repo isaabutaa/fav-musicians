@@ -2,7 +2,9 @@ import {useState} from 'react'
 
 export default function ArtistForm(props) {
     const initInputs = { 
-        artistName: props.artistName || "", description: props.description || "" }
+        artistName: props.artistName || "",
+        description: props.description || "" 
+    }
     const [artist, setArtist] = useState(initInputs)
     const {submit, _id, toggleEditForm} = props
 
