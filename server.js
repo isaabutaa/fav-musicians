@@ -4,23 +4,17 @@ require('dotenv').config()
 const morgan = require('morgan')
 const mongoose = require('mongoose')
 const expressJwt = require('express-jwt')
+const path = require('path')
 const mySecret = process.env.MY_SECRET
 const port = process.env.PORT
 
 // middleware
 app.use(express.json())
 app.use(morgan('dev'))
+app.use(express.static(path.join(__dirname, "client", "build")))
 
 // connect to db
-mongoose.connect("mongodb://localhost:27017/musicians",
-    {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false
-    },
-    () => console.log("Connected to the fav-musicians db!!!")
-)
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // routes
 app.use("/auth", require("./routes/authRouter.js"))
@@ -35,6 +29,11 @@ app.use((err, req, res, next) => {
         res.status(err.status)
     }
     res.send({errMsg: err.message})
+})
+
+// for deployment
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"))
 })
 
 // listen for server
