@@ -18,16 +18,12 @@ This was one of my full stack assignments while attending my coding boot camp. I
 
 ### Views
 
-Login:
-
-![login page](./screenshots/fav-musicians-login.PNG)
-
 Profile:
 
-![profile page](./screenshots/fav-musicians-profile.PNG)
+![profile page](./screenshots/favmusicians-profile.PNG)
 
 Home:
 
-![home page](./screenshots/fav-musicians-home.PNG)
+![home page](./screenshots/favmusicians-home.PNG)
 
 
